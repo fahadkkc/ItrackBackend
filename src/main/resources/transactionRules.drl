@@ -1,0 +1,10 @@
+package KieRule;
+import com.example.ItrackBackend.model.InwardTransaction
+
+rule "amount"
+
+when
+transactionObject : InwardTransaction(amount>60000);
+then
+transactionObject.setChannelCode(2);
+end

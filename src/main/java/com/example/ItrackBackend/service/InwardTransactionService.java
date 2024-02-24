@@ -4,9 +4,11 @@ import com.example.ItrackBackend.model.InwardTransaction;
 import com.example.ItrackBackend.model.dtos.InwardTransactionDto;
 import com.example.ItrackBackend.repository.InwardTransactionRepository;
 import lombok.RequiredArgsConstructor;
+import org.kie.api.runtime.KieSession;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InwardTransactionService {
     private final InwardTransactionRepository inwardTransactionRepository;
+    private final KieSession kieSession;
 
     public InwardTransaction getInwardTransaction(String id) {
         return inwardTransactionRepository.findById(id).get();
@@ -28,5 +31,15 @@ public class InwardTransactionService {
     public List<InwardTransaction> listInwardTransaction(Integer pageNo, Integer pageLimit) {
         Pageable pageable = PageRequest.of(pageNo, pageLimit);
         return inwardTransactionRepository.findAll(pageable).stream().toList();
+    }
+
+    public List<InwardTransaction> fireInwardTransactionRule(Integer pageNo, Integer pageLimit) {
+        Pageable pageable = PageRequest.of(pageNo, pageLimit);
+        List<InwardTransaction> inwardTransactionList = inwardTransactionRepository.findAll(pageable).stream().toList();
+        for (InwardTransaction inwardTransaction : inwardTransactionList) {
+            kieSession.insert(inwardTransaction);
+            kieSession.fireAllRules();
+        }
+        return inwardTransactionList;
     }
 }
