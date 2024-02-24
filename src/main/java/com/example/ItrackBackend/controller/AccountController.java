@@ -30,4 +30,9 @@ public class AccountController {
         return accountService.listAccount(pageNo, pageLimit);
 
     }
+
+    @GetMapping("/list-params")
+    Account listParams() {
+        return new Account();
+    }
 }
