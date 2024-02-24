@@ -1,0 +1,32 @@
+package com.example.ItrackBackend.service;
+
+import com.example.ItrackBackend.model.InwardTransaction;
+import com.example.ItrackBackend.model.dtos.InwardTransactionDto;
+import com.example.ItrackBackend.repository.InwardTransactionRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class InwardTransactionService {
+    private final InwardTransactionRepository inwardTransactionRepository;
+
+    public InwardTransaction getInwardTransaction(String id) {
+        return inwardTransactionRepository.findById(id).get();
+    }
+
+    public InwardTransaction updateInwardTransaction(String id, InwardTransactionDto request) {
+        InwardTransaction inwardTransaction = inwardTransactionRepository.findById(id).get();
+        inwardTransaction.setBeneficiaryAccountName(request.getBeneficiaryAccountName());
+        return inwardTransactionRepository.save(inwardTransaction);
+    }
+
+    public List<InwardTransaction> listInwardTransaction(Integer pageNo, Integer pageLimit) {
+        Pageable pageable = PageRequest.of(pageNo, pageLimit);
+        return inwardTransactionRepository.findAll(pageable).stream().toList();
+    }
+}
