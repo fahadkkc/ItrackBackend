@@ -1,5 +1,6 @@
 package com.example.ItrackBackend.model;
 
+import com.example.ItrackBackend.model.dynamicParams.InwardTransactionsDynamicParams;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,33 +8,27 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.Date;
+
 
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-@Document(collection = "inward-transactions")
+@Document(collection = "test_inward_transactions")
 public class InwardTransaction {
 
     @Id
     private String id;
     @Field(name = "SessionID")
     private String sessionID;
-    @Field(name = "AccountNo")
-    private Long accountNo;
-    @Field(name = "SourceBank")
-    private Long sourceBank;
     @Field(name = "DestinationBank")
-    private Integer destinationBank;
-    @Field(name = "Amount")
-    private Long amount;
+    private Long destinationBank;
     @Field(name = "ChannelCode")
     private Integer channelCode;
     @Field(name = "Narration")
     private String narration;
-    @Field(name = "TransactionStatus")
-    private Integer transactionStatus;
     @Field(name = "DatePosted")
-    private String datePosted;
+    private Date datePosted;
     @Field(name = "OriginatorAccountNumber")
     private Long originatorAccountNumber;
     @Field(name = "OriginatorAccountName")
@@ -43,7 +38,7 @@ public class InwardTransaction {
     @Field(name = "BeneficiaryAccountName")
     private String beneficiaryAccountName;
     @Field(name = "BeneficiaryBankVerificationNumber")
-    private String beneficiaryBankVerificationNumber;
+    private Long beneficiaryBankVerificationNumber;
     @Field(name = "C24Response")
     private String c24Response;
     @Field(name = "NewStan")
@@ -58,4 +53,7 @@ public class InwardTransaction {
     private Integer nibsResStatus;
     @Field(name = "DateModified")
     private String dateModified;
+    @Field(name = "Amount")
+    private Long amount;
+    private InwardTransactionsDynamicParams dynamicParams;
 }
