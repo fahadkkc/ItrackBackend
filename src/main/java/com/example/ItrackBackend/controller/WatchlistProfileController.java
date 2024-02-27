@@ -33,4 +33,5 @@ public class WatchlistProfileController {
     WatchlistProfile listParams() {
         return new WatchlistProfile();
     }
+
 }
