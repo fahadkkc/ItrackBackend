@@ -29,4 +29,8 @@ public class WatchlistProfileController {
         return watchlistProfileService.listWatchlistProfile(pageNo, pageLimit);
 
     }
+    @GetMapping("/watchlist-profile-params")
+    WatchlistProfile listParams() {
+        return new WatchlistProfile();
+    }
 }

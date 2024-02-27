@@ -1,31 +1,31 @@
 package com.example.ItrackBackend.model;
 
+import com.example.ItrackBackend.model.dynamicParams.WatchListedProfileDynamicParams;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.Date;
+
 
 @AllArgsConstructor
 @Data
-@Document(collection = "WatchlistedProfile")
+@NoArgsConstructor
+@Document(collection = "watch_listed_profile")
 public class WatchlistProfile {
 
     @Id
     private String id;
-    @Field(name="accountno")
-    private Long accountNo;
-    @Field(name="accountname")
+    @Field(name = "accountname")
     private String accountName;
-    @Field(name="reason")
-    private String reason;
-    @Field(name="watchlistedby")
-    private String watchlistBy;
-    @Field(name="watchlistdate")
-    private String watchlistDate;
-    @Field(name="modifiedDate")
-    private String modifiedDate;
-    @Field(name="modifieduser")
+    @Field(name = "watchlistedby")
+    private String watchListedBy;
+    @Field(name = "modifiedDate")
+    private Date modifiedDate;
+    @Field(name = "modifieduser")
     private String modifiedUser;
+    private WatchListedProfileDynamicParams dynamicParams;
 }

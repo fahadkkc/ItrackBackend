@@ -4,6 +4,7 @@ import com.example.ItrackBackend.model.InwardTransaction;
 import com.example.ItrackBackend.model.dtos.InwardTransactionDto;
 import com.example.ItrackBackend.service.InwardTransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,5 +32,14 @@ public class InwardTransactionController {
     @GetMapping("/fire-inward-transaction-rule")
     List<InwardTransaction> fireInwardTransactionRule(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
         return inwardTransactionService.fireInwardTransactionRule(pageNo,pageLimit);
+    }
+    @PostMapping("/create-rule-transaction")
+    ResponseEntity<?> createRule(@RequestParam("ruleData") String data)
+    {
+        return null;
+    }
+    @GetMapping("/inward-transaction-params")
+    InwardTransaction listParams() {
+        return new InwardTransaction();
     }
 }

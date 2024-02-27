@@ -31,7 +31,7 @@ public class AccountController {
 
     }
 
-    @GetMapping("/list-params")
+    @GetMapping("/account-params")
     Account listParams() {
         return new Account();
     }

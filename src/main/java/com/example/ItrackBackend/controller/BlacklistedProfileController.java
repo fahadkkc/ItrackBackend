@@ -30,4 +30,9 @@ public class BlacklistedProfileController {
         return blacklistedProfileService.listBlacklistedProfile(pageNo, pageLimit);
 
     }
+
+    @GetMapping("/blacklist-profile-params")
+    BlacklistedProfile listParams() {
+        return new BlacklistedProfile();
+    }
 }

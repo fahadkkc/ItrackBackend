@@ -28,4 +28,9 @@ public class OutwardProfileController {
         return outwardProfileService.listOutwardProfile(pageNo, pageLimit);
 
     }
+
+    @GetMapping("/outward-profile-params")
+    OutwardProfile listParams() {
+        return new OutwardProfile();
+    }
 }

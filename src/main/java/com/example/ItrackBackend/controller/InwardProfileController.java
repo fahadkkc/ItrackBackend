@@ -28,4 +28,8 @@ public class InwardProfileController {
         return inwardProfileService.listInwardProfile(pageNo, pageLimit);
 
     }
+    @GetMapping("/inward-profile-params")
+    InwardProfile listParams() {
+        return new InwardProfile();
+    }
 }
