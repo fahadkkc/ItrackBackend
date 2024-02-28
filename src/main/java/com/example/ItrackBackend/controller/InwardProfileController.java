@@ -2,6 +2,7 @@ package com.example.ItrackBackend.controller;
 
 import com.example.ItrackBackend.model.InwardProfile;
 import com.example.ItrackBackend.model.dtos.InwardProfileDto;
+import com.example.ItrackBackend.model.dynamicParams.InwardProfileDynamicParams;
 import com.example.ItrackBackend.service.InwardProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class InwardProfileController {
 
     }
     @GetMapping("/inward-profile-params")
-    InwardProfile listParams() {
-        return new InwardProfile();
+    InwardProfileDynamicParams listParams() {
+        return new InwardProfileDynamicParams();
     }
 }

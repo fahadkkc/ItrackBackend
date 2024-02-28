@@ -2,6 +2,7 @@ package com.example.ItrackBackend.controller;
 
 import com.example.ItrackBackend.model.InwardTransaction;
 import com.example.ItrackBackend.model.dtos.InwardTransactionDto;
+import com.example.ItrackBackend.model.dynamicParams.InwardTransactionsDynamicParams;
 import com.example.ItrackBackend.service.InwardTransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class InwardTransactionController {
         return null;
     }
     @GetMapping("/inward-transaction-params")
-    InwardTransaction listParams() {
-        return new InwardTransaction();
+    InwardTransactionsDynamicParams listParams() {
+        return new InwardTransactionsDynamicParams();
     }
 }
