@@ -2,6 +2,7 @@ package com.example.ItrackBackend.controller;
 
 import com.example.ItrackBackend.model.WatchlistProfile;
 import com.example.ItrackBackend.model.dtos.WatchlistProfileDto;
+import com.example.ItrackBackend.model.dynamicParams.WatchListedProfileDynamicParams;
 import com.example.ItrackBackend.service.WatchlistProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,8 @@ public class WatchlistProfileController {
 
     }
     @GetMapping("/watchlist-profile-params")
-    WatchlistProfile listParams() {
-        return new WatchlistProfile();
+    WatchListedProfileDynamicParams listParams() {
+        return new WatchListedProfileDynamicParams();
     }
+
 }

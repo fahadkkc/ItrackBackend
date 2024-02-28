@@ -2,6 +2,7 @@ package com.example.ItrackBackend.controller;
 
 import com.example.ItrackBackend.model.OutwardProfile;
 import com.example.ItrackBackend.model.dtos.OutwardProfileDto;
+import com.example.ItrackBackend.model.dynamicParams.OutwardProfileDynamicParams;
 import com.example.ItrackBackend.service.OutwardProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class OutwardProfileController {
     }
 
     @GetMapping("/outward-profile-params")
-    OutwardProfile listParams() {
-        return new OutwardProfile();
+    OutwardProfileDynamicParams listParams() {
+        return new OutwardProfileDynamicParams();
     }
 }

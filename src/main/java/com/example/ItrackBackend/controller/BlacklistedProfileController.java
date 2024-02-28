@@ -2,6 +2,7 @@ package com.example.ItrackBackend.controller;
 
 import com.example.ItrackBackend.model.BlacklistedProfile;
 import com.example.ItrackBackend.model.dtos.BlacklistedProfileDto;
+import com.example.ItrackBackend.model.dynamicParams.BlackListedProfileDynamicParams;
 import com.example.ItrackBackend.service.BlacklistedProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class BlacklistedProfileController {
     }
 
     @GetMapping("/blacklist-profile-params")
-    BlacklistedProfile listParams() {
-        return new BlacklistedProfile();
+    BlackListedProfileDynamicParams listParams() {
+        return new BlackListedProfileDynamicParams();
     }
 }

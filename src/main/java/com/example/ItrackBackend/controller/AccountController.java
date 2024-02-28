@@ -2,6 +2,7 @@ package com.example.ItrackBackend.controller;
 
 import com.example.ItrackBackend.model.Account;
 import com.example.ItrackBackend.model.dtos.AccountDto;
+import com.example.ItrackBackend.model.dynamicParams.AccountListingDynamicParams;
 import com.example.ItrackBackend.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class AccountController {
     }
 
     @GetMapping("/account-params")
-    Account listParams() {
-        return new Account();
+    AccountListingDynamicParams listParams() {
+        return new AccountListingDynamicParams();
     }
 }
