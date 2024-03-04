@@ -1,5 +1,6 @@
 package com.example.ItrackBackend.controller;
 
+import com.example.ItrackBackend.model.Account;
 import com.example.ItrackBackend.model.BlacklistedProfile;
 import com.example.ItrackBackend.model.dtos.BlacklistedProfileDto;
 import com.example.ItrackBackend.model.dynamicParams.BlackListedProfileDynamicParams;
@@ -35,5 +36,12 @@ public class BlacklistedProfileController {
     @GetMapping("/blacklist-profile-params")
     BlackListedProfileDynamicParams listParams() {
         return new BlackListedProfileDynamicParams();
+    }
+
+    @GetMapping("/list-blacklist-profile/{accountNo}")
+    List<BlacklistedProfile> listBlacklistProfileByAccountNo(
+            @RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit,
+            @PathVariable("accountNo") Long accountNo) {
+        return blacklistedProfileService.listBlacklistProfileByAccountNo(pageNo, pageLimit, accountNo);
     }
 }

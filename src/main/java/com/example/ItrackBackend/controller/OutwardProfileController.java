@@ -1,5 +1,6 @@
 package com.example.ItrackBackend.controller;
 
+import com.example.ItrackBackend.model.InwardProfile;
 import com.example.ItrackBackend.model.OutwardProfile;
 import com.example.ItrackBackend.model.dtos.OutwardProfileDto;
 import com.example.ItrackBackend.model.dynamicParams.OutwardProfileDynamicParams;
@@ -33,5 +34,12 @@ public class OutwardProfileController {
     @GetMapping("/outward-profile-params")
     OutwardProfileDynamicParams listParams() {
         return new OutwardProfileDynamicParams();
+    }
+
+    @GetMapping("/list-outward-profile/{accountNo}")
+    List<OutwardProfile> listOutwardProfileByAccountNo(
+            @RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit,
+            @PathVariable("accountNo") Long accountNo) {
+        return outwardProfileService.listOutwardProfileByAccountNo(pageNo, pageLimit, accountNo);
     }
 }

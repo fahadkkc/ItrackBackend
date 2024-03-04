@@ -32,15 +32,23 @@ public class InwardTransactionController {
 
     @GetMapping("/fire-inward-transaction-rule")
     List<InwardTransaction> fireInwardTransactionRule(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
-        return inwardTransactionService.fireInwardTransactionRule(pageNo,pageLimit);
+        return inwardTransactionService.fireInwardTransactionRule(pageNo, pageLimit);
     }
+
     @PostMapping("/create-rule-transaction")
-    ResponseEntity<?> createRule(@RequestParam("ruleData") String data)
-    {
+    ResponseEntity<?> createRule(@RequestParam("ruleData") String data) {
         return null;
     }
+
     @GetMapping("/inward-transaction-params")
     InwardTransactionsDynamicParams listParams() {
         return new InwardTransactionsDynamicParams();
+    }
+
+    @GetMapping("/list-inward-transaction/{accountNo}")
+    List<InwardTransaction> listInwardTransactionsByAccountNo(
+            @RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit,
+            @PathVariable("accountNo") Long accountNo) {
+        return inwardTransactionService.listInwardTransactionsByAccountNo(pageNo, pageLimit, accountNo);
     }
 }

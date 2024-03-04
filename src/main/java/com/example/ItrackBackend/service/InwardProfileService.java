@@ -6,6 +6,7 @@ import com.example.ItrackBackend.model.dtos.BlacklistedProfileDto;
 import com.example.ItrackBackend.model.dtos.InwardProfileDto;
 import com.example.ItrackBackend.repository.InwardProfileRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,11 @@ public class InwardProfileService {
     public List<InwardProfile> listInwardProfile(Integer pageNo, Integer pageLimit) {
         Pageable pageable = PageRequest.of(pageNo, pageLimit);
         return inwardProfileRepository.findAll(pageable).stream().toList();
+    }
+
+    public List<InwardProfile> listInwardProfileByAccountNo(Integer pageNo, Integer pageLimit, Long accountNo) {
+        Pageable pageable = PageRequest.of(pageNo, pageLimit);
+        Page inwardProfiles = inwardProfileRepository.findByAccountNumber(accountNo, pageable);
+        return inwardProfiles.stream().toList();
     }
 }

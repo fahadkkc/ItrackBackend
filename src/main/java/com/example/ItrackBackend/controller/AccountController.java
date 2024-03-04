@@ -1,6 +1,7 @@
 package com.example.ItrackBackend.controller;
 
 import com.example.ItrackBackend.model.Account;
+import com.example.ItrackBackend.model.InwardTransaction;
 import com.example.ItrackBackend.model.dtos.AccountDto;
 import com.example.ItrackBackend.model.dynamicParams.AccountListingDynamicParams;
 import com.example.ItrackBackend.service.AccountService;
@@ -35,5 +36,12 @@ public class AccountController {
     @GetMapping("/account-params")
     AccountListingDynamicParams listParams() {
         return new AccountListingDynamicParams();
+    }
+
+    @GetMapping("/list-account/{accountNo}")
+    List<Account> listAccountByAccountNo(
+            @RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit,
+            @PathVariable("accountNo") Long accountNo) {
+        return accountService.listAccountByAccountNo(pageNo, pageLimit, accountNo);
     }
 }
