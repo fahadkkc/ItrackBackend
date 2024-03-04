@@ -1,5 +1,6 @@
 package com.example.ItrackBackend.controller;
 
+import com.example.ItrackBackend.model.OutwardProfile;
 import com.example.ItrackBackend.model.WatchlistProfile;
 import com.example.ItrackBackend.model.dtos.WatchlistProfileDto;
 import com.example.ItrackBackend.model.dynamicParams.WatchListedProfileDynamicParams;
@@ -33,6 +34,13 @@ public class WatchlistProfileController {
     @GetMapping("/watchlist-profile-params")
     WatchListedProfileDynamicParams listParams() {
         return new WatchListedProfileDynamicParams();
+    }
+
+    @GetMapping("/list-watchlist-profile/{accountNo}")
+    List<WatchlistProfile> listWatchlistProfileByAccountNo(
+            @RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit,
+            @PathVariable("accountNo") Long accountNo) {
+        return watchlistProfileService.listWatchlistProfileByAccountNo(pageNo, pageLimit, accountNo);
     }
 
 }

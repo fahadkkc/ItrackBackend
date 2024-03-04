@@ -1,9 +1,11 @@
 package com.example.ItrackBackend.service;
 
+import com.example.ItrackBackend.model.OutwardProfile;
 import com.example.ItrackBackend.model.WatchlistProfile;
 import com.example.ItrackBackend.model.dtos.WatchlistProfileDto;
 import com.example.ItrackBackend.repository.WatchlistProfileRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,11 @@ public class WatchlistProfileService {
     public List<WatchlistProfile> listWatchlistProfile(Integer pageNo, Integer pageLimit) {
         Pageable pageable = PageRequest.of(pageNo, pageLimit);
         return watchlistProfileRepository.findAll(pageable).stream().toList();
+    }
+
+    public List<WatchlistProfile> listWatchlistProfileByAccountNo(Integer pageNo, Integer pageLimit, Long accountNo) {
+        Pageable pageable = PageRequest.of(pageNo, pageLimit);
+        Page watchlistProfileRepositoryByAccountNumber = watchlistProfileRepository.findByAccountNumber(accountNo, pageable);
+        return watchlistProfileRepositoryByAccountNumber.stream().toList();
     }
 }

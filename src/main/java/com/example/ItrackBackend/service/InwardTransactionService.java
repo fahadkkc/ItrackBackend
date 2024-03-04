@@ -5,11 +5,13 @@ import com.example.ItrackBackend.model.dtos.InwardTransactionDto;
 import com.example.ItrackBackend.repository.InwardTransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.kie.api.runtime.KieSession;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,5 +43,11 @@ public class InwardTransactionService {
             kieSession.fireAllRules();
         }
         return inwardTransactionList;
+    }
+
+    public List<InwardTransaction> listInwardTransactionsByAccountNo(Integer pageNo, Integer pageLimit, Long accountNo) {
+        Pageable pageable = PageRequest.of(pageNo, pageLimit);
+        Page inwardTransactions = inwardTransactionRepository.findByAccountNumber(accountNo, pageable);
+        return inwardTransactions.stream().toList();
     }
 }
