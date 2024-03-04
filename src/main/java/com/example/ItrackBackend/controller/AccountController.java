@@ -36,6 +36,7 @@ public class AccountController {
     @GetMapping("/account-params")
     AccountListingDynamicParams listParams() {
         return new AccountListingDynamicParams();
+
     }
 
     @GetMapping("/list-account/{accountNo}")

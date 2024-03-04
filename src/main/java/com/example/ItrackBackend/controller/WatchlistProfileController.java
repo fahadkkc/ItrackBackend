@@ -42,4 +42,5 @@ public class WatchlistProfileController {
             @PathVariable("accountNo") Long accountNo) {
         return watchlistProfileService.listWatchlistProfileByAccountNo(pageNo, pageLimit, accountNo);
     }
+
 }
