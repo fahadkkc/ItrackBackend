@@ -11,34 +11,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/inward-profile")
 @RequiredArgsConstructor
 public class InwardProfileController {
     private final InwardProfileService inwardProfileService;
 
-    @GetMapping("/inward-profile")
-    InwardProfile getInwardProfile(@RequestParam("id") String id) {
-        return inwardProfileService.getInwardProfile(id);
-    }
 
-    @PutMapping("/inward-profile")
+    @PutMapping("/{id}")
     InwardProfile updateInwardProfile(@RequestParam("id") String id, @RequestBody InwardProfileDto request) {
         return inwardProfileService.updateInwardProfile(id, request);
     }
 
-    @GetMapping("/list-inward-profile")
-    List<InwardProfile> listInwardProfile(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
-        return inwardProfileService.listInwardProfile(pageNo, pageLimit);
 
-    }
-    @GetMapping("/inward-profile-params")
+    @GetMapping("/dynamic-params")
     InwardProfileDynamicParams listParams() {
         return new InwardProfileDynamicParams();
     }
 
-    @GetMapping("/list-inward-profile/{accountNo}")
+    @GetMapping("/{accountNo}")
     List<InwardProfile> listInwardProfileByAccountNo(
-            @RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit,
+
             @PathVariable("accountNo") Long accountNo) {
-        return inwardProfileService.listInwardProfileByAccountNo(pageNo, pageLimit, accountNo);
+        return inwardProfileService.listInwardProfileByAccountNo( accountNo);
     }
+
+
+
+//    @GetMapping("/inward-profile")
+//    InwardProfile getInwardProfile(@RequestParam("id") String id) {
+//        return inwardProfileService.getInwardProfile(id);
+//    }
+//
+//    @GetMapping("/list-inward-profile")
+//    List<InwardProfile> listInwardProfile(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
+//        return inwardProfileService.listInwardProfile(pageNo, pageLimit);
+//
+//    }
 }

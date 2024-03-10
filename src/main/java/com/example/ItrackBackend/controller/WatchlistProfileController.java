@@ -11,36 +11,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/watchlist-profile")
 @RequiredArgsConstructor
 public class WatchlistProfileController {
     private final WatchlistProfileService watchlistProfileService;
 
-    @GetMapping("/watchlist-profile")
-    WatchlistProfile getWatchlistProfile(@RequestParam("id") String id) {
-        return watchlistProfileService.getWatchlistProfile(id);
-
-    }
-
-    @PutMapping("/watchlist-profile")
+    @PutMapping("/{id}")
     WatchlistProfile updateWatchlistProfile(@RequestParam("id") String id, @RequestBody WatchlistProfileDto request) {
         return watchlistProfileService.updateWatchlistProfile(id, request);
     }
-
-    @GetMapping("/list-watchlist-profile")
-    List<WatchlistProfile> listWatchlistProfile(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
-        return watchlistProfileService.listWatchlistProfile(pageNo, pageLimit);
-
-    }
-    @GetMapping("/watchlist-profile-params")
+    @GetMapping("/dynamic-params")
     WatchListedProfileDynamicParams listParams() {
         return new WatchListedProfileDynamicParams();
     }
 
-    @GetMapping("/list-watchlist-profile/{accountNo}")
+    @GetMapping("/{accountNo}")
     List<WatchlistProfile> listWatchlistProfileByAccountNo(
-            @RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit,
             @PathVariable("accountNo") Long accountNo) {
-        return watchlistProfileService.listWatchlistProfileByAccountNo(pageNo, pageLimit, accountNo);
+        return watchlistProfileService.listWatchlistProfileByAccountNo(accountNo);
     }
+
+//    @GetMapping("/")
+//    WatchlistProfile getWatchlistProfile(@RequestParam("id") String id) {
+//        return watchlistProfileService.getWatchlistProfile(id);
+//
+//    }
+//    @GetMapping("/list-watchlist-profile")
+//    List<WatchlistProfile> listWatchlistProfile(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
+//        return watchlistProfileService.listWatchlistProfile(pageNo, pageLimit);
+//
+//    }
 
 }

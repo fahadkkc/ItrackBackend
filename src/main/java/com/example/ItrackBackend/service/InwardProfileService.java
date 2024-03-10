@@ -33,9 +33,8 @@ public class InwardProfileService {
         return inwardProfileRepository.findAll(pageable).stream().toList();
     }
 
-    public List<InwardProfile> listInwardProfileByAccountNo(Integer pageNo, Integer pageLimit, Long accountNo) {
-        Pageable pageable = PageRequest.of(pageNo, pageLimit);
-        Page inwardProfiles = inwardProfileRepository.findByAccountNumber(accountNo, pageable);
+    public List<InwardProfile> listInwardProfileByAccountNo(Long accountNo) {
+        List<InwardProfile> inwardProfiles = inwardProfileRepository.findByAccountNumber(accountNo);
         return inwardProfiles.stream().toList();
     }
 }

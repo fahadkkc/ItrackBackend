@@ -4,7 +4,6 @@ import com.example.ItrackBackend.enums.ComparisonTypes;
 import com.example.ItrackBackend.model.*;
 import com.example.ItrackBackend.model.dtos.*;
 import com.example.ItrackBackend.model.dtos.SingleRuleDto;
-import com.example.ItrackBackend.model.dynamicParams.DynamicParams;
 import com.example.ItrackBackend.model.dynamicParams.InwardTransactionsDynamicParams;
 import com.example.ItrackBackend.service.*;
 import lombok.RequiredArgsConstructor;
