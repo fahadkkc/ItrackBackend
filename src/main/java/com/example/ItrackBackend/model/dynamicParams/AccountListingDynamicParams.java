@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Builder
 public class AccountListingDynamicParams {
@@ -16,4 +15,11 @@ public class AccountListingDynamicParams {
     private String cumDebit;
     private String cumCredit;
     private String availBal;
+
+    public AccountListingDynamicParams() {
+        this.accountNo = 0L;
+        this.cumDebit = "0";
+        this.cumCredit = "0";
+        this.availBal = "";
+    }
 }

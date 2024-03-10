@@ -12,37 +12,43 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping("/account")
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
 
-    @GetMapping("/account")
-    Account getAccount(@RequestParam("id") String id) {
-        return accountService.getAccount(id);
 
-    }
-
-    @PutMapping("/account")
-    Account getAccount(@RequestParam("id") String id, @RequestBody AccountDto request) {
+    @PutMapping("/{id}")
+    Account updateAccount(@RequestParam("id") String id, @RequestBody AccountDto request) {
         return accountService.updateAccount(id, request);
     }
-
-    @GetMapping("/list-account")
-    List<Account> listAccount(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
-        return accountService.listAccount(pageNo, pageLimit);
-
-    }
-
-    @GetMapping("/account-params")
+    @GetMapping("/dynamic-params")
     AccountListingDynamicParams listParams() {
         return new AccountListingDynamicParams();
 
     }
 
-    @GetMapping("/list-account/{accountNo}")
+    @GetMapping("/{accountNo}")
     List<Account> listAccountByAccountNo(
-            @RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit,
             @PathVariable("accountNo") Long accountNo) {
-        return accountService.listAccountByAccountNo(pageNo, pageLimit, accountNo);
+        return accountService.listAccountByAccountNo( accountNo);
     }
+
+
+
+
+
+    //NOT NEEDED
+//    @GetMapping("/{id}")
+//    Account getAccountById(@RequestParam("id") String id) {
+//        return accountService.getAccount(id);
+//
+//    }
+
+//    @GetMapping("/list-account")
+//    List<Account> listAccount(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
+//        return accountService.listAccount(pageNo, pageLimit);
+//
+//    }
+
 }

@@ -9,7 +9,6 @@ import java.util.Date;
 
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Builder
 public class OutwardProfileDynamicParams {
@@ -19,4 +18,12 @@ public class OutwardProfileDynamicParams {
     private String avgAmount;
     private Long maxAmount;
     private Date profileDate;
+
+    public OutwardProfileDynamicParams() {
+        this.accountNo = 0L;
+        this.minAmount = "0";
+        this.avgAmount = "0";
+        this.maxAmount = 0L;
+        this.profileDate = new Date(); // You may use a specific default date if needed
+    }
 }

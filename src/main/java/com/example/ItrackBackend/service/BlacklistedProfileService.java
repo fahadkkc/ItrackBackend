@@ -33,9 +33,8 @@ public class BlacklistedProfileService {
         return blacklistedProfileRepository.findAll(pageable).stream().toList();
     }
 
-    public List<BlacklistedProfile> listBlacklistProfileByAccountNo(Integer pageNo, Integer pageLimit, Long accountNo) {
-        Pageable pageable = PageRequest.of(pageNo, pageLimit);
-        Page blacklistedProfileRepositoryByAccountNumber = blacklistedProfileRepository.findByAccountNumber(accountNo, pageable);
+    public List<BlacklistedProfile> listBlacklistProfileByAccountNo(Long accountNo) {
+        List<BlacklistedProfile> blacklistedProfileRepositoryByAccountNumber = blacklistedProfileRepository.findByAccountNumber(accountNo);
         return blacklistedProfileRepositoryByAccountNumber.stream().toList();
     }
 }

@@ -32,9 +32,9 @@ public class WatchlistProfileService {
         return watchlistProfileRepository.findAll(pageable).stream().toList();
     }
 
-    public List<WatchlistProfile> listWatchlistProfileByAccountNo(Integer pageNo, Integer pageLimit, Long accountNo) {
-        Pageable pageable = PageRequest.of(pageNo, pageLimit);
-        Page watchlistProfileRepositoryByAccountNumber = watchlistProfileRepository.findByAccountNumber(accountNo, pageable);
+    public List<WatchlistProfile> listWatchlistProfileByAccountNo(Long accountNo) {
+
+        List<WatchlistProfile> watchlistProfileRepositoryByAccountNumber = watchlistProfileRepository.findByAccountNumber(accountNo);
         return watchlistProfileRepositoryByAccountNumber.stream().toList();
     }
 }

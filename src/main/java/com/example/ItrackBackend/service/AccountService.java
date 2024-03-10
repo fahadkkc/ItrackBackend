@@ -31,9 +31,8 @@ public class AccountService {
         Pageable pageable = PageRequest.of(pageNo, pageLimit);
         return accountRepository.findAll(pageable).stream().toList();
     }
-    public List<Account> listAccountByAccountNo(Integer pageNo, Integer pageLimit, Long accountNo) {
-        Pageable pageable = PageRequest.of(pageNo, pageLimit);
-        Page accounts = accountRepository.findByAccountNumber(accountNo, pageable);
+    public List<Account> listAccountByAccountNo(Long accountNo) {
+        List<Account> accounts = accountRepository.findByAccountNumber(accountNo);
         return accounts.stream().toList();
     }
 }

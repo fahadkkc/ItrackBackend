@@ -45,9 +45,8 @@ public class InwardTransactionService {
         return inwardTransactionList;
     }
 
-    public List<InwardTransaction> listInwardTransactionsByAccountNo(Integer pageNo, Integer pageLimit, Long accountNo) {
-        Pageable pageable = PageRequest.of(pageNo, pageLimit);
-        Page inwardTransactions = inwardTransactionRepository.findByAccountNumber(accountNo, pageable);
+    public List<InwardTransaction> listInwardTransactionsByAccountNo(Long accountNo) {
+        List<InwardTransaction> inwardTransactions = inwardTransactionRepository.findByAccountNumber(accountNo);
         return inwardTransactions.stream().toList();
     }
 }

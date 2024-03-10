@@ -15,4 +15,7 @@ public interface InwardTransactionRepository extends MongoRepository<InwardTrans
     // Query for transactions where the account number matches either the originator's account number or the dynamic params account number
     @Query("{ $or: [ { 'originatorAccountNumber': ?0 }, { 'dynamicParams.accountNo': ?0 } ] }")
     Page<InwardTransaction> findByAccountNumber(Long accountNo, Pageable pageable);
+
+    @Query("{ $or: [ { 'originatorAccountNumber': ?0 }, { 'dynamicParams.accountNo': ?0 } ] }")
+    List<InwardTransaction> findByAccountNumber(Long accountNo);
 }

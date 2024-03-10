@@ -32,9 +32,8 @@ public class OutwardProfileService {
         return outwardProfileRepository.findAll(pageable).stream().toList();
     }
 
-    public List<OutwardProfile> listOutwardProfileByAccountNo(Integer pageNo, Integer pageLimit, Long accountNo) {
-        Pageable pageable = PageRequest.of(pageNo, pageLimit);
-        Page outwardProfileRepositoryByAccountNumber = outwardProfileRepository.findByAccountNumber(accountNo, pageable);
+    public List<OutwardProfile> listOutwardProfileByAccountNo(Long accountNo) {
+        List<OutwardProfile> outwardProfileRepositoryByAccountNumber = outwardProfileRepository.findByAccountNumber(accountNo);
         return outwardProfileRepositoryByAccountNumber.stream().toList();
     }
 }

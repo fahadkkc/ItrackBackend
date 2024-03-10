@@ -11,37 +11,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/blacklist-profile")
 @RequiredArgsConstructor
 public class BlacklistedProfileController {
 
     private final BlacklistedProfileService blacklistedProfileService;
 
-    @GetMapping("/blacklist-profile")
-    BlacklistedProfile getBlacklistedProfile(@RequestParam("id") String id) {
-        return blacklistedProfileService.getBlacklistedProfile(id);
 
-    }
-
-    @PutMapping("/blacklist-profile")
+    @PutMapping("/")
     BlacklistedProfile updateBlacklistedProfile(@RequestParam("id") String id, @RequestBody BlacklistedProfileDto request) {
         return blacklistedProfileService.updateBlacklistedProfile(id, request);
     }
-
-    @GetMapping("/list-blacklist-profile")
-    List<BlacklistedProfile> listBlacklistedProfile(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
-        return blacklistedProfileService.listBlacklistedProfile(pageNo, pageLimit);
-
-    }
-
-    @GetMapping("/blacklist-profile-params")
+    @GetMapping("/dynamic-params")
     BlackListedProfileDynamicParams listParams() {
         return new BlackListedProfileDynamicParams();
     }
 
-    @GetMapping("/list-blacklist-profile/{accountNo}")
+    @GetMapping("/{accountNo}")
     List<BlacklistedProfile> listBlacklistProfileByAccountNo(
-            @RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit,
             @PathVariable("accountNo") Long accountNo) {
-        return blacklistedProfileService.listBlacklistProfileByAccountNo(pageNo, pageLimit, accountNo);
+        return blacklistedProfileService.listBlacklistProfileByAccountNo(accountNo);
     }
+
+//    @GetMapping("/")
+//    BlacklistedProfile getBlacklistedProfile(@RequestParam("id") String id) {
+//        return blacklistedProfileService.getBlacklistedProfile(id);
+//
+//    }
+//    @GetMapping("/list-blacklist-profile")
+//    List<BlacklistedProfile> listBlacklistedProfile(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
+//        return blacklistedProfileService.listBlacklistedProfile(pageNo, pageLimit);
+//
+//    }
+
 }

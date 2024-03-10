@@ -11,35 +11,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/outward-profile")
 @RequiredArgsConstructor
 public class OutwardProfileController {
     private final OutwardProfileService outwardProfileService;
 
-    @GetMapping("/outward-profile")
-    OutwardProfile getOutwardProfile(@RequestParam("id") String id) {
-        return outwardProfileService.getOutwardProfile(id);
-    }
-
-    @PutMapping("/outward-profile")
+    @PutMapping("/{id}")
     OutwardProfile updateOutwardProfile(@RequestParam("id") String id, @RequestBody OutwardProfileDto request) {
         return outwardProfileService.updateOutwardProfile(id, request);
     }
 
-    @GetMapping("/list-outward-profile")
-    List<OutwardProfile> listOutwardProfile(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
-        return outwardProfileService.listOutwardProfile(pageNo, pageLimit);
-
-    }
-
-    @GetMapping("/outward-profile-params")
+    @GetMapping("/dynamic-params")
     OutwardProfileDynamicParams listParams() {
         return new OutwardProfileDynamicParams();
     }
 
-    @GetMapping("/list-outward-profile/{accountNo}")
+    @GetMapping("/{accountNo}")
     List<OutwardProfile> listOutwardProfileByAccountNo(
-            @RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit,
             @PathVariable("accountNo") Long accountNo) {
-        return outwardProfileService.listOutwardProfileByAccountNo(pageNo, pageLimit, accountNo);
+        return outwardProfileService.listOutwardProfileByAccountNo(accountNo);
     }
+//
+//    @GetMapping("/list-outward-profile")
+//    List<OutwardProfile> listOutwardProfile(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
+//        return outwardProfileService.listOutwardProfile(pageNo, pageLimit);
+//
+////    }
+//@GetMapping()
+//OutwardProfile getOutwardProfile(@RequestParam("id") String id) {
+//    return outwardProfileService.getOutwardProfile(id);
 }
+
