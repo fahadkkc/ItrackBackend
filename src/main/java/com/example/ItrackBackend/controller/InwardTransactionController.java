@@ -37,6 +37,7 @@ public class InwardTransactionController {
 //    List<InwardTransaction> fireInwardTransactionRule(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageLimit") Integer pageLimit) {
 //        return inwardTransactionService.fireInwardTransactionRule(pageNo, pageLimit);
 //    }
+
 //@GetMapping()
 //InwardTransaction getInwardTransaction(@RequestParam("id") String id) {
 //    return inwardTransactionService.getInwardTransaction(id);
