@@ -1,9 +1,12 @@
 package com.example.ItrackBackend.service;
 
+import com.example.ItrackBackend.model.FlagFact;
 import com.example.ItrackBackend.model.InwardTransaction;
 import com.example.ItrackBackend.model.dtos.InwardTransactionDto;
 import com.example.ItrackBackend.repository.InwardTransactionRepository;
 import lombok.RequiredArgsConstructor;
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,11 +40,16 @@ public class InwardTransactionService {
 
     public List<InwardTransaction> fireInwardTransactionRule(Integer pageNo, Integer pageLimit) {
         Pageable pageable = PageRequest.of(pageNo, pageLimit);
+        FlagFact flagFact = new FlagFact(true); // Initialize the flag as true
+        kieSession.insert(flagFact); // Insert the FlagFact instance into the session
+
         List<InwardTransaction> inwardTransactionList = inwardTransactionRepository.findAll(pageable).stream().toList();
         for (InwardTransaction inwardTransaction : inwardTransactionList) {
             kieSession.insert(inwardTransaction);
             kieSession.fireAllRules();
+            boolean flag = flagFact.isFlag();
         }
+
         return inwardTransactionList;
     }
 
