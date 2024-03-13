@@ -161,7 +161,8 @@ public class RuleService {
         ruleBuilder.append("when\n");
         ruleBuilder.append("$").append(primaryCollection).append(" : ").append(primaryCollection).append("($").append(primaryParam).append(" : ").append("dynamicParams.").append(primaryParam).append(")\n");
         ruleBuilder.append("$").append(secondaryCollection).append(" : ").append(secondaryCollection).append("($").append(secondaryParam).append(" : ").append("dynamicParams.").append(secondaryParam).append(")\n");
-        ruleBuilder.append("eval(").append("$").append(secondaryParam).append(condition).append(secondaryParam).append(")\n");
+        ruleBuilder.append("eval(").append("$").append(secondaryParam).append(condition).append(primaryParam).append(")\n");
+        ruleBuilder.append("flagFact : FlagFact();\n");
         ruleBuilder.append("then\n");
         if (consequence) {
             ruleBuilder.append("     flagFact.setFlag(true);\n");
