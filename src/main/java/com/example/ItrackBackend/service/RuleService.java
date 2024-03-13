@@ -137,36 +137,40 @@ public class RuleService {
 
             ruleBuilder.append("])\n");
         }else {
-            ruleBuilder.append(collectionName).append(" : ").append(collectionName).append("(").append(dynamicParam).append(condition).append(values.get(0)).append(")\n");
+            ruleBuilder.append(collectionName).append(" : ").append(collectionName).append("(dynamicParams.").append(dynamicParam).append(condition).append(values.get(0)).append(")\n");
         }
+        ruleBuilder.append("flagFact : FlagFact();\n");
         ruleBuilder.append("then\n");
         if (consequence) {
-            ruleBuilder.append("    insertLogical(Boolean.TRUE);\n");
+            ruleBuilder.append("     flagFact.setFlag(true);\n");
         }
         else{
-            ruleBuilder.append("    insertLogical(Boolean.FALSE);\n");
+            ruleBuilder.append("     flagFact.setFlag(false);\n");
         }
+        ruleBuilder.append("    update(flagFact);");
         ruleBuilder.append("end");
+        ruleBuilder.append("\n\n");
 
         return ruleBuilder.toString();
     }
     public String generateMultiRule(String ruleName, String primaryCollection, String primaryParam, String secondaryCollection, String secondaryParam, String condition, Boolean consequence) {
         StringBuilder ruleBuilder = new StringBuilder();
+        ruleName = (ruleName != null) ? ruleName : "Default";
 
         ruleBuilder.append("rule \"").append(ruleName).append("\"\n");
         ruleBuilder.append("when\n");
-        ruleBuilder.append("$").append(primaryCollection).append(" : ").append(primaryCollection).append("($").append(primaryParam).append(" : ").append(primaryParam).append(")\n");
-        ruleBuilder.append("$").append(secondaryCollection).append(" : ").append(secondaryCollection).append("(").append(secondaryParam).append(" : ").append(secondaryParam).append(")\n");
+        ruleBuilder.append("$").append(primaryCollection).append(" : ").append(primaryCollection).append("($").append(primaryParam).append(" : ").append("dynamicParams.").append(primaryParam).append(")\n");
+        ruleBuilder.append("$").append(secondaryCollection).append(" : ").append(secondaryCollection).append("($").append(secondaryParam).append(" : ").append("dynamicParams.").append(secondaryParam).append(")\n");
         ruleBuilder.append("eval(").append("$").append(secondaryParam).append(condition).append(secondaryParam).append(")\n");
         ruleBuilder.append("then\n");
         if (consequence) {
-            ruleBuilder.append("    insertLogical(Boolean.TRUE);\n");
+            ruleBuilder.append("     flagFact.setFlag(true);\n");
         }
         else{
-            ruleBuilder.append("    insertLogical(Boolean.FALSE);\n");
+            ruleBuilder.append("     flagFact.setFlag(false);\n");
         }
         ruleBuilder.append("end");
-
+        ruleBuilder.append("\n\n");
         return ruleBuilder.toString();
     }
     public void appendRuleToFile(String filePath, String ruleToAdd) {
@@ -194,9 +198,89 @@ public class RuleService {
             System.err.println("Error appending rule to file: " + e.getMessage());
         }
     }
+//    public boolean fireRules(Long accountNo){
+//        //kieSession.setGlobal("isTransactionFlagged", null);
+//          // List of Inward Transactions
+//        List<InwardTransaction> inwardTransactionList = inwardTransactionService.listInwardTransactionsByAccountNo(accountNo);
+//        if (inwardTransactionList != null) {
+//            for (InwardTransaction inwardTransaction : inwardTransactionList) {
+//                if (inwardTransaction != null) {
+//                    kieSession.insert(inwardTransaction);
+//                }
+//            }
+//        }
+//
+////
+////// List of Blacklisted Profiles
+////        List<BlacklistedProfile> blacklistedProfiles = blacklistedProfileService.listBlacklistProfileByAccountNo(accountNo);
+////        if (blacklistedProfiles != null) {
+////            for (BlacklistedProfile blacklistedProfile : blacklistedProfiles) {
+////                if (blacklistedProfile != null) {
+////                    kieSession.insert(blacklistedProfile);
+////                }
+////            }
+////        }
+////
+////// List of Watchlist Profiles
+////        List<WatchlistProfile> watchlistProfiles = watchlistProfileService.listWatchlistProfileByAccountNo(accountNo);
+////        if (watchlistProfiles != null) {
+////            for (WatchlistProfile watchlistProfile : watchlistProfiles) {
+////                if (watchlistProfile != null) {
+////                    kieSession.insert(watchlistProfile);
+////                }
+////            }
+////        }
+////
+////// List of Inward Profiles
+////        List<InwardProfile> inwardProfiles = inwardProfileService.listInwardProfileByAccountNo(accountNo);
+////        if (inwardProfiles != null) {
+////            for (InwardProfile inwardProfile : inwardProfiles) {
+////                if (inwardProfile != null) {
+////                    kieSession.insert(inwardProfile);
+////                }
+////            }
+////        }
+////
+////// List of Accounts
+////        List<Account> accounts = accountService.listAccountByAccountNo(accountNo);
+////        if (accounts != null) {
+////            for (Account account : accounts) {
+////                if (account != null) {
+////                    kieSession.insert(account);
+////                }
+////            }
+////        }
+////
+////// List of Outward Profiles
+////        List<OutwardProfile> outwardProfiles = outwardProfileService.listOutwardProfileByAccountNo(accountNo);
+////        if (outwardProfiles != null) {
+////            for (OutwardProfile outwardProfile : outwardProfiles) {
+////                if (outwardProfile != null) {
+////                    kieSession.insert(outwardProfile);
+////                }
+////            }
+////        }
+//
+//        System.out.println("Before firing rules - Updated facts in working memory:");
+//        for (FactHandle factHandle : kieSession.getFactHandles()) {
+//            Object fact = kieSession.getObject(factHandle);
+//            System.out.println("Updated Fact: " + fact);
+//        }
+//        kieSession.fireAllRules();
+//        System.out.println("After firing rules - Updated facts in working memory:");
+//        for (FactHandle factHandle : kieSession.getFactHandles()) {
+//            Object fact = kieSession.getObject(factHandle);
+//            System.out.println("Updated Fact: " + fact);
+//        }
+//        Boolean isTransactionFlagged = (Boolean) kieSession.getGlobal("isTransactionFlagged");
+//        return isTransactionFlagged;
+//
+//    }
+
     public boolean fireRules(Long accountNo){
-        kieSession.setGlobal("isTransactionFlagged", null);
-          // List of Inward Transactions
+        FlagFact isTransactionFlagged = new FlagFact(true);
+        kieSession.insert(isTransactionFlagged); // Insert the FlagFact instance into the session
+
         List<InwardTransaction> inwardTransactionList = inwardTransactionService.listInwardTransactionsByAccountNo(accountNo);
         if (inwardTransactionList != null) {
             for (InwardTransaction inwardTransaction : inwardTransactionList) {
@@ -206,71 +290,58 @@ public class RuleService {
                 }
             }
         }
+        // List of Blacklisted Profiles
+        List<BlacklistedProfile> blacklistedProfiles = blacklistedProfileService.listBlacklistProfileByAccountNo(accountNo);
+        if (blacklistedProfiles != null) {
+            for (BlacklistedProfile blacklistedProfile : blacklistedProfiles) {
+                if (blacklistedProfile != null) {
+                    kieSession.insert(blacklistedProfile);
+                }
+            }
+        }
 
-//
-//// List of Blacklisted Profiles
-//        List<BlacklistedProfile> blacklistedProfiles = blacklistedProfileService.listBlacklistProfileByAccountNo(accountNo);
-//        if (blacklistedProfiles != null) {
-//            for (BlacklistedProfile blacklistedProfile : blacklistedProfiles) {
-//                if (blacklistedProfile != null) {
-//                    kieSession.insert(blacklistedProfile);
-//                }
-//            }
-//        }
-//
-//// List of Watchlist Profiles
-//        List<WatchlistProfile> watchlistProfiles = watchlistProfileService.listWatchlistProfileByAccountNo(accountNo);
-//        if (watchlistProfiles != null) {
-//            for (WatchlistProfile watchlistProfile : watchlistProfiles) {
-//                if (watchlistProfile != null) {
-//                    kieSession.insert(watchlistProfile);
-//                }
-//            }
-//        }
-//
-//// List of Inward Profiles
-//        List<InwardProfile> inwardProfiles = inwardProfileService.listInwardProfileByAccountNo(accountNo);
-//        if (inwardProfiles != null) {
-//            for (InwardProfile inwardProfile : inwardProfiles) {
-//                if (inwardProfile != null) {
-//                    kieSession.insert(inwardProfile);
-//                }
-//            }
-//        }
-//
-//// List of Accounts
-//        List<Account> accounts = accountService.listAccountByAccountNo(accountNo);
-//        if (accounts != null) {
-//            for (Account account : accounts) {
-//                if (account != null) {
-//                    kieSession.insert(account);
-//                }
-//            }
-//        }
-//
-//// List of Outward Profiles
-//        List<OutwardProfile> outwardProfiles = outwardProfileService.listOutwardProfileByAccountNo(accountNo);
-//        if (outwardProfiles != null) {
-//            for (OutwardProfile outwardProfile : outwardProfiles) {
-//                if (outwardProfile != null) {
-//                    kieSession.insert(outwardProfile);
-//                }
-//            }
-//        }
+        // List of Watchlist Profiles
+        List<WatchlistProfile> watchlistProfiles = watchlistProfileService.listWatchlistProfileByAccountNo(accountNo);
+        if (watchlistProfiles != null) {
+            for (WatchlistProfile watchlistProfile : watchlistProfiles) {
+                if (watchlistProfile != null) {
+                    kieSession.insert(watchlistProfile);
+                }
+            }
+        }
 
-        System.out.println("Before firing rules - Updated facts in working memory:");
-        for (FactHandle factHandle : kieSession.getFactHandles()) {
-            Object fact = kieSession.getObject(factHandle);
-            System.out.println("Updated Fact: " + fact);
+        // List of Inward Profiles
+        List<InwardProfile> inwardProfiles = inwardProfileService.listInwardProfileByAccountNo(accountNo);
+        if (inwardProfiles != null) {
+            for (InwardProfile inwardProfile : inwardProfiles) {
+                if (inwardProfile != null) {
+                    kieSession.insert(inwardProfile);
+                }
+            }
+        }
+
+        // List of Accounts
+        List<Account> accounts = accountService.listAccountByAccountNo(accountNo);
+        if (accounts != null) {
+            for (Account account : accounts) {
+                if (account != null) {
+                    kieSession.insert(account);
+                }
+            }
+        }
+
+        // List of Outward Profiles
+        List<OutwardProfile> outwardProfiles = outwardProfileService.listOutwardProfileByAccountNo(accountNo);
+        if (outwardProfiles != null) {
+            for (OutwardProfile outwardProfile : outwardProfiles) {
+                if (outwardProfile != null) {
+                    kieSession.insert(outwardProfile);
+                }
+            }
         }
         kieSession.fireAllRules();
-        System.out.println("After firing rules - Updated facts in working memory:");
-        for (FactHandle factHandle : kieSession.getFactHandles()) {
-            Object fact = kieSession.getObject(factHandle);
-            System.out.println("Updated Fact: " + fact);
-        }
-        Boolean isTransactionFlagged = (Boolean) kieSession.getGlobal("isTransactionFlagged");
-        return isTransactionFlagged;
+        Boolean result = isTransactionFlagged.isFlag();
+        return result;
 
     }
 
