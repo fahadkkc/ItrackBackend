@@ -12,14 +12,3 @@ then
     flagFact.setFlag(false);
     update(flagFact);
 end
-
-rule "Compare Amount with Min Amount"
-when
-    $transaction: InwardTransaction($amount : amount)
-    $profile: InwardProfile(min_amt : min_amt)
-    eval($amount > min_amt)
-then
-    // Your consequences when the condition is true
-    $transaction.setChannelCode(2);
-    isTransactionFlagged = true; // Update the global flag if needed
-end
