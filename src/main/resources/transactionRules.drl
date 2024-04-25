@@ -1,14 +1,13 @@
-package KieRule;
-import com.example.ItrackBackend.model.InwardTransaction;
-import com.example.ItrackBackend.model.FlagFact;
-
-rule "amount"
-
+import com.engine.ItrackBackend.model.InwardTransaction;
+import com.engine.ItrackBackend.model.FlagFact;
+rule "Amount2"
 when
-    transactionObject : InwardTransaction(dynamicParams.amount > 5000);
-    flagFact : FlagFact();
+InwardTransaction : InwardTransaction(dynamicParams.amount>6000)
+flagFact : FlagFact();
 then
-    transactionObject.setChannelCode(50);
-    flagFact.setFlag(false);
+     flagFact.setFlag(true);
+     flagFact.setLevel("One");
     update(flagFact);
 end
+
+
